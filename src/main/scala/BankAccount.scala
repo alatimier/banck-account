@@ -5,17 +5,23 @@ case class Operation(date: LocalDateTime, amount: Int, balance: Int)
 class BankAccount(operations: Seq[Operation]) {
 
   def deposit(amount: Int): BankAccount = {
-    if (amount < 0) {
-      throw new IllegalArgumentException()
-    }
-    new BankAccount(operations :+ Operation(LocalDateTime.now(), amount, getBalance() + amount))
+    requirePositive(amount)
+    new BankAccount(operations :+ Operation(LocalDateTime.now(), amount, balance + amount))
   }
 
-  def withdraw(amount: Int): BankAccount = ???
+  def withdraw(amount: Int): BankAccount = {
+    requirePositive(amount)
+    if (balance < amount) {
+      throw new IllegalStateException()
+    }
+    new BankAccount(operations :+ Operation(LocalDateTime.now(), amount, balance - amount))
+  }
 
-  def getBalance(): Int = if (operations.isEmpty) 0 else operations.last.balance
+  def balance: Int = if (operations.isEmpty) 0 else operations.last.balance
 
   def printStatement(): List[Operation] = ???
+
+  private def requirePositive(amount: Int): Unit = if (amount < 0) throw new IllegalArgumentException()
 
 }
 
