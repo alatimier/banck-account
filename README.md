@@ -27,3 +27,13 @@ Think of your personal bank account experience When in doubt, go for the simples
 **In order to** check my operations  
 **As a** bank client  
 **I want to** see the history (operation, date, amount, balance) of my operations
+
+## Solution
+The provided solution focused on the account key features and no user interface was implemented. 
+The solution is only runnable through unit tests. 
+The next step would be the implementation of a CLI to register user operations on his account.
+
+## Usage
+```shell script
+sbt test
+```
